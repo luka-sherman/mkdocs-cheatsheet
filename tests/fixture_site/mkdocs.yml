@@ -1,0 +1,30 @@
+site_name: Animal Field Notes
+theme:
+  name: material
+  features:
+    - navigation.tabs
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Home: index.md
+  - Mammalia:
+      - Cats: mammals/cats.md
+      - Whales: mammals/whales.md
+  - Birds:
+      - All: birds/index.md
+      - Raptors:
+          - Owls: birds/owls.md
+
+plugins:
+  - search
+  - cheatsheet:
+      button: true
+      sort: alphabetical
+      group_titles:
+        Mammalia: Mammals
