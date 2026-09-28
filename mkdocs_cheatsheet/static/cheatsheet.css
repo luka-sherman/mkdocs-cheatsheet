@@ -1,0 +1,229 @@
+/* mkdocs-cheatsheet. Every color and size below is a custom property that
+   falls back to Material's own theme variables, so the defaults follow any
+   palette. Override the --md-cheatsheet-* properties in your extra_css.
+   Declared on [data-md-color-scheme] as well as :root because Material sets
+   the color scheme on <body>; a var() resolved at <html> alone would keep
+   the light scheme's values in dark mode. Overrides need the same selector. */
+
+:root,
+[data-md-color-scheme] {
+  --md-cheatsheet-group-min-width: 22rem;
+  --md-cheatsheet-group-gap: 0.6rem;
+  --md-cheatsheet-group-bg: var(--md-default-fg-color--lightest);
+  --md-cheatsheet-group-padding: 0.8rem;
+  --md-cheatsheet-group-radius: 0.3rem;
+  --md-cheatsheet-group-title-color: var(--md-default-fg-color);
+
+  --md-cheatsheet-card-min-width: 11rem;
+  --md-cheatsheet-card-gap: 0.8rem;
+  --md-cheatsheet-card-bg: var(--md-default-bg-color);
+  --md-cheatsheet-card-border: transparent;
+  --md-cheatsheet-card-radius: 0.2rem;
+  --md-cheatsheet-card-padding: 0.5rem 0.7rem;
+  --md-cheatsheet-card-hover-ring: var(--md-accent-fg-color);
+
+  --md-cheatsheet-icon-color: var(--md-accent-fg-color);
+  --md-cheatsheet-title-color: var(--md-default-fg-color);
+  --md-cheatsheet-description-color: var(--md-default-fg-color--light);
+  --md-cheatsheet-parent-color: var(--md-default-fg-color);
+  --md-cheatsheet-term-color: var(--md-typeset-a-color);
+  --md-cheatsheet-term-hover-bg: color-mix(in srgb, var(--md-accent-fg-color) 12%, transparent);
+  --md-cheatsheet-separator-color: var(--md-default-fg-color--light);
+  --md-cheatsheet-term-size: 0.62em;
+  --md-cheatsheet-focus-ring: var(--md-accent-fg-color);
+
+  --md-cheatsheet-button-fg: currentColor;
+  --md-cheatsheet-button-bg: transparent;
+  --md-cheatsheet-button-border: currentColor;
+  --md-cheatsheet-button-active-fg: var(--md-primary-fg-color);
+  --md-cheatsheet-button-active-bg: var(--md-primary-bg-color);
+  --md-cheatsheet-button-radius: 1rem;
+  --md-cheatsheet-button-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z'/%3E%3C/svg%3E");
+}
+
+/* -- groups ---------------------------------------------------------------- */
+
+.md-cheatsheet {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--md-cheatsheet-group-min-width)), 1fr));
+  gap: var(--md-cheatsheet-group-gap);
+}
+
+.md-cheatsheet__group {
+  padding: var(--md-cheatsheet-group-padding);
+  background-color: var(--md-cheatsheet-group-bg);
+  border-radius: var(--md-cheatsheet-group-radius);
+}
+
+.md-typeset .md-cheatsheet__group-title {
+  margin: 0 0 0.1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--md-cheatsheet-group-title-color);
+}
+
+/* -- cards ----------------------------------------------------------------- */
+
+.md-typeset .md-cheatsheet__grid {
+  margin: 0.8rem 0 0;
+}
+
+.md-typeset .md-cheatsheet__grid > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--md-cheatsheet-card-min-width)), 1fr));
+  gap: var(--md-cheatsheet-card-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset .md-cheatsheet__grid > ul > .md-cheatsheet__card {
+  position: relative;
+  margin: 0;
+  padding: var(--md-cheatsheet-card-padding);
+  background-color: var(--md-cheatsheet-card-bg);
+  border: 1px solid var(--md-cheatsheet-card-border);
+  border-radius: var(--md-cheatsheet-card-radius);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.md-typeset .md-cheatsheet__card:hover {
+  box-shadow: 0 0 0 0.05rem var(--md-cheatsheet-card-hover-ring);
+  transform: translateY(-0.1rem);
+}
+
+.md-typeset .md-cheatsheet__card > p {
+  margin: 0 0 0.4em;
+}
+
+.md-typeset .md-cheatsheet__card a {
+  text-decoration: none;
+}
+
+.md-typeset .md-cheatsheet__icon {
+  color: var(--md-cheatsheet-icon-color);
+}
+
+.md-typeset .md-cheatsheet__title-link,
+.md-typeset .md-cheatsheet__title-link strong {
+  color: var(--md-cheatsheet-title-color);
+  outline: none;
+}
+
+/* Whole-card click-through: the title link's ::after covers the card.
+   Every other link sits above it (z-index 2) and stays clickable. */
+.md-typeset .md-cheatsheet__title-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.md-typeset .md-cheatsheet__title-link:focus-visible {
+  outline: 0.15rem solid var(--md-cheatsheet-focus-ring);
+  outline-offset: 0.15rem;
+  border-radius: 0.1rem;
+}
+
+.md-typeset .md-cheatsheet__card p:not(.md-cheatsheet__title) a,
+.md-typeset .md-cheatsheet__title a:not(.md-cheatsheet__title-link) {
+  position: relative;
+  z-index: 2;
+}
+
+.md-typeset .md-cheatsheet__description {
+  line-height: 1.4;
+  color: var(--md-cheatsheet-description-color);
+}
+
+.md-typeset .md-cheatsheet__row {
+  line-height: 1.15;
+  margin-bottom: 0.2em;
+}
+
+.md-typeset .md-cheatsheet__card code {
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+  transition: background-color 0.15s;
+}
+
+.md-typeset .md-cheatsheet__card a:hover code {
+  background-color: var(--md-cheatsheet-term-hover-bg);
+  border-radius: 0.15rem;
+}
+
+.md-typeset .md-cheatsheet__parent {
+  color: var(--md-cheatsheet-parent-color);
+}
+
+.md-typeset .md-cheatsheet__term {
+  color: var(--md-cheatsheet-term-color);
+}
+
+.md-typeset .md-cheatsheet__term > code {
+  font-size: var(--md-cheatsheet-term-size);
+}
+
+.md-typeset .md-cheatsheet__colon {
+  margin-right: 0.25em;
+  color: var(--md-cheatsheet-separator-color);
+}
+
+/* Commas between terms. A term hidden by another plugin (display: none)
+   can still leave a trailing comma on the row before it. */
+.md-typeset .md-cheatsheet__row > .md-cheatsheet__term:not(:last-child)::after,
+.md-typeset .md-cheatsheet__row > .md-cheatsheet__term-wrap:not(:last-child)::after {
+  content: ",";
+  color: var(--md-cheatsheet-separator-color);
+}
+
+/* -- header button --------------------------------------------------------- */
+
+html[data-md-cheatsheet-button] .md-header__button.md-logo {
+  display: none;
+}
+
+.md-cheatsheet-button {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.6rem;
+  padding: 0.15rem 0.6rem;
+  border: 0.05rem solid var(--md-cheatsheet-button-border);
+  border-radius: var(--md-cheatsheet-button-radius);
+  background-color: var(--md-cheatsheet-button-bg);
+  color: var(--md-cheatsheet-button-fg);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.md-cheatsheet-button::before {
+  content: "";
+  display: inline-block;
+  flex: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-right: 0.3rem;
+  background-color: currentColor;
+  -webkit-mask: var(--md-cheatsheet-button-icon) center / contain no-repeat;
+  mask: var(--md-cheatsheet-button-icon) center / contain no-repeat;
+}
+
+.md-cheatsheet-button:hover,
+.md-cheatsheet-button:focus-visible {
+  text-decoration: underline;
+}
+
+.md-cheatsheet-button--active {
+  background-color: var(--md-cheatsheet-button-active-bg);
+  color: var(--md-cheatsheet-button-active-fg);
+  border-color: var(--md-cheatsheet-button-active-bg);
+}
+
+.md-cheatsheet-button--active:hover,
+.md-cheatsheet-button--active:focus-visible {
+  text-decoration: none;
+}

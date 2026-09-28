@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mkdocs-cheatsheet"
+version = "0.1.0"
+description = "Material for MkDocs plugin: builds a linked cheatsheet card grid from flagged headings across your site."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Luka Sherman", email = "luka.msherman@gmail.com" }]
+dependencies = ["mkdocs>=1.5", "markdown>=3.3"]
+classifiers = [
+  "Framework :: MkDocs",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+]
+
+[project.optional-dependencies]
+# Test-only. The plugin doesn't need mkdocs-material, but the test site uses it.
+test = [
+  "mkdocs-material",
+  "pytest",
+  "playwright",
+  "pytest-playwright",
+]
+
+[project.urls]
+Homepage = "https://github.com/luka-sherman/mkdocs-cheatsheet"
+
+[project.entry-points."mkdocs.plugins"]
+cheatsheet = "mkdocs_cheatsheet.plugin:CheatsheetPlugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mkdocs_cheatsheet"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [".claude", "screenshots"]
